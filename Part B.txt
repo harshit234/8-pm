@@ -1,0 +1,88 @@
+Part B- 
+
+Q1)A- Difference between break and continue (with example)
+
+Ans) 
+- break exits the entire loop immediately.
+
+- continue skips the rest of the current iteration and proceeds with the next iteration.
+
+Code-
+for i in range(1, 6):
+    if i == 3:
+        continue  
+    if i == 5:
+        break     
+    print(i)
+# Output:
+# 1
+# 2
+# 4
+
+Q1)A- What is the else clause in for / while loops?
+    When does it execute? Practical use case (hint: search pattern)
+Ans)
+The else clause on for / while loops - A loop's else block runs only if the loop completed normally (i.e., it did not exit via break).
+Search Pattern- 
+def find_first_even(nums):
+    for x in nums:
+        if x % 2 == 0:
+            print("Found even:", x)
+            break
+    else:
+        print("No even number found.")
+
+Q2)Coding
+
+Ans)A-O(n²) solution
+def find_pairs_bruteforce(numbers, target):
+    pairs = []
+    n = len(numbers)
+    for i in range(n):
+        for j in range(i+1, n):
+            if numbers[i] + numbers[j] == target:
+                pairs.append((numbers[i], numbers[j]))
+    return pairs
+
+# Example
+# find_pairs_bruteforce([1,2,3,4,5], 6) -> [(1, 5), (2, 4)]
+
+B- O(n) solution
+def find_pairs(numbers, target):
+    seen = set()         
+    found_pairs = []     
+    added = set()       
+    for x in numbers:
+        comp = target - x
+        if comp in seen:
+            a, b = (min(x, comp), max(x, comp))
+            if (a, b) not in added:
+                found_pairs.append((a, b))
+                added.add((a, b))
+        seen.add(x)
+
+    return found_pairs
+
+# Example
+# find_pairs([1, 2, 3, 4, 5], 6) -> [(1, 5), (2, 4)]
+
+Q3) Debug & Analyze
+Ans)def is_prime(n): 
+    if n < 2: 
+   return False 
+for i in range(2, n): # Bug? 
+if n % i == 0: 
+return False return True
+Identify the bug(s) -> The loop runs from 2 to n - 1. 
+This results in O(n) time complexity, which is inefficient for large numbers. 
+To check if a number is prime, it is sufficient to test divisibility up to √n,
+Fix using optimal logic -> 
+def is_prime(n):
+if n < 2: 
+return False 
+for i in range(2, int(n**0.5) + 1):
+if n % i == 0: 
+return False 
+return True
+
+
